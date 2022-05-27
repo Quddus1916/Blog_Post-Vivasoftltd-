@@ -3,6 +3,7 @@ package controllers
 import (
 	"blogpost.com/models"
 	"blogpost.com/token"
+	"blogpost.com/utils"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -20,6 +21,7 @@ func Register(c echo.Context) error {
 
 	user.Token = token
 	user.Refreshtoken = refreshtoken
+	user.Password = utils.Encrypt(user.Password)
 
 	res := models.CreateUser(user)
 
