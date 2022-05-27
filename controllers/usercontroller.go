@@ -45,6 +45,9 @@ func Login(c echo.Context) error {
 	userdata.Refreshtoken = refreshtoken
 	//update user
 	response := models.Updateusertoken(userdata)
+	if !response {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
 
-	return c.JSON(http.StatusOK, response)
+	return c.JSON(http.StatusOK, userdata.Token)
 }
