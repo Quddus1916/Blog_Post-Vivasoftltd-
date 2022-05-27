@@ -15,3 +15,7 @@ type UserLogIn struct {
 	Email    string
 	Password string
 }
+
+type Category struct {
+	Category string
+}
