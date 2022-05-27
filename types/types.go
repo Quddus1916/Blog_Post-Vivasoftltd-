@@ -10,3 +10,8 @@ type SignedDetails struct {
 	User_id  int
 	jwt.StandardClaims
 }
+
+type UserLogIn struct {
+	Email    string
+	Password string
+}
