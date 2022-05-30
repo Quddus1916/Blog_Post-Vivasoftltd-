@@ -14,8 +14,6 @@ func main() {
 		Format: "method=${method}, uri=${uri}, status=${status}\n",
 	}))
 
-	
-
 	routes.Userroutes(e)
 
 	routes.Blogroutes(e)

@@ -59,3 +59,14 @@ func Update_blog(c echo.Context) error {
 	res := repositories.Update_blog(newblog)
 	return c.JSON(http.StatusOK, res)
 }
+
+func Delete_blog(c echo.Context) error {
+	var newblog = new(models.Blog)
+	if err := c.Bind(newblog); err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	//newblog.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+
+	res := repositories.Delete_blog(newblog)
+	return c.JSON(http.StatusOK, res)
+}

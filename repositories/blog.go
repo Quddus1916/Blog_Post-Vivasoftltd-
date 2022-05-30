@@ -28,3 +28,8 @@ func Update_blog(blog *models.Blog) *models.Blog {
 	DB.Model(&blog).Where("postid = ?", blog.Postid).Updates(map[string]interface{}{"post": blog.Post, "updated_at": blog.Updated_at, "category": blog.Category})
 	return blog
 }
+
+func Delete_blog(blog *models.Blog) string {
+	DB.Where("postid = ?", blog.Postid).Delete(&blog)
+	return "delete successful"
+}

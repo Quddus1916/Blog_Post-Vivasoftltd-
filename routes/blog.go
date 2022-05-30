@@ -14,5 +14,6 @@ func Blogroutes(e *echo.Echo) {
 	blog.GET("/by_category", controllers.Get_blog_by_category)
 	blog.GET("/all_blogs", controllers.Get_all)
 	blog.POST("/update", controllers.Update_blog)
+	blog.DELETE("/delete", controllers.Delete_blog)
 
 }
