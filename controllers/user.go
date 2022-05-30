@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"time"
 )
 
 func Register(c echo.Context) error {
@@ -51,4 +52,16 @@ func Login(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, userdata.Token)
+}
+
+func Update_user(c echo.Context) error {
+	var new_user = new(models.User)
+	if err := c.Bind(new_user); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	new_user.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+
+	res := repositories.Update_user(new_user)
+
+	return c.JSON(http.StatusOK, res)
 }

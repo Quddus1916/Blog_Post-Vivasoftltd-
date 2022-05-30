@@ -17,3 +17,14 @@ func Get_By_Category(category string) []models.Blog {
 	DB.Where("category=?", category).Find(&blogs)
 	return blogs
 }
+
+func Get_all() []models.Blog {
+	var blogs []models.Blog
+	DB.Find(&blogs)
+	return blogs
+}
+
+func Update_blog(blog *models.Blog) *models.Blog {
+	DB.Model(&blog).Where("postid = ?", blog.Postid).Updates(map[string]interface{}{"post": blog.Post, "updated_at": blog.Updated_at, "category": blog.Category})
+	return blog
+}

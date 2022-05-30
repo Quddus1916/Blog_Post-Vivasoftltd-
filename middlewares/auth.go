@@ -25,12 +25,12 @@ func Authenticate(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 		//send for verification
 
-		Ok, err := helpers.Verify_token(reqToken)
+		ok, err := helpers.Verify_token(reqToken)
 		if err != nil {
 			return c.String(http.StatusUnauthorized, err.Error())
 		}
 
-		if !Ok {
+		if !ok {
 			return c.String(http.StatusInternalServerError, err.Error())
 		}
 

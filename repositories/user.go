@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"blogpost.com/models"
+	"blogpost.com/utils"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
@@ -27,4 +28,10 @@ func Set_token(user *models.User) bool {
 	}
 	return true
 
+}
+
+func Update_user(user *models.User) *models.User {
+	user.Password = utils.Encrypt(user.Password)
+	DB.Model(&user).Where("id = ?", user.Id).Updates(map[string]interface{}{"name": user.Name, "updated_at": user.Updated_at, "password": user.Password})
+	return user
 }

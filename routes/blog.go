@@ -11,6 +11,8 @@ func Blogroutes(e *echo.Echo) {
 	user.Use(middlewares.Authenticate)
 
 	user.POST("/post", controllers.Create_blog)
-	user.GET("/bycategory", controllers.Get_blog_by_category)
+	user.GET("/by_category", controllers.Get_blog_by_category)
+	user.GET("/all_blogs", controllers.Get_all)
+	user.POST("/update", controllers.Update_blog)
 
 }
