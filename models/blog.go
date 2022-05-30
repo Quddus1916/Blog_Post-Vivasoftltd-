@@ -1,8 +1,6 @@
 package models
 
 import (
-	//"blogpost.com/database"
-	//"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"time"
 )

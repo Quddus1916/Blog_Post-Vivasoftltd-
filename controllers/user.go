@@ -34,7 +34,7 @@ func Login(c echo.Context) error {
 	var userdata = new(models.User)
 	userdata = repositories.Get_by_email(user.Email)
 
-	if ok := utils.Verifypassword(user.Password, userdata.Password); ok {
+	if ok := utils.Verify_password(user.Password, userdata.Password); ok {
 		fmt.Println("verified user")
 	}
 	//handover tokens to db
@@ -50,7 +50,6 @@ func Login(c echo.Context) error {
 	if !response {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
-
 	return c.JSON(http.StatusOK, userdata.Token)
 }
 
@@ -60,8 +59,6 @@ func Update_user(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 	new_user.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-
 	res := repositories.Update_user(new_user)
-
 	return c.JSON(http.StatusOK, res)
 }
