@@ -7,12 +7,12 @@ import (
 )
 
 func Blogroutes(e *echo.Echo) {
-	user := e.Group("/blog")
-	user.Use(middlewares.Authenticate)
+	blog := e.Group("/blog")
+	blog.Use(middlewares.Authenticate)
 
-	user.POST("/post", controllers.Create_blog)
-	user.GET("/by_category", controllers.Get_blog_by_category)
-	user.GET("/all_blogs", controllers.Get_all)
-	user.POST("/update", controllers.Update_blog)
+	blog.POST("/post", controllers.Create_blog)
+	blog.GET("/by_category", controllers.Get_blog_by_category)
+	blog.GET("/all_blogs", controllers.Get_all)
+	blog.POST("/update", controllers.Update_blog)
 
 }
