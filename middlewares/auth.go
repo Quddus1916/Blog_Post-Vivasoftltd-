@@ -25,7 +25,7 @@ func Authenticate(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 		//send for verification
 
-		Ok, err := helpers.Verifytoken(reqToken)
+		Ok, err := helpers.Verify_token(reqToken)
 		if err != nil {
 			return c.String(http.StatusUnauthorized, err.Error())
 		}

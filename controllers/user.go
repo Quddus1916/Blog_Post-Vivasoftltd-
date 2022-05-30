@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"blogpost.com/models"
+	"blogpost.com/repositories"
 	"blogpost.com/token"
 	"blogpost.com/types"
 	"blogpost.com/utils"
@@ -17,7 +18,7 @@ func Register(c echo.Context) error {
 	}
 	user.Password = utils.Encrypt(user.Password)
 
-	res := models.CreateUser(user)
+	res := repositories.Create_user(user)
 
 	return c.JSON(http.StatusOK, res)
 }
@@ -30,13 +31,13 @@ func Login(c echo.Context) error {
 	}
 	//fetch details
 	var userdata = new(models.User)
-	userdata = models.Getuserbyemail(user.Email)
-	Ok := utils.Verifypassword(user.Password, userdata.Password)
-	if Ok {
+	userdata = repositories.Get_by_email(user.Email)
+
+	if ok := utils.Verifypassword(user.Password, userdata.Password); ok {
 		fmt.Println("verified user")
 	}
-	//handover tokens
-	token, refreshtoken, err := token.Generatetokens(userdata.Email, userdata.Name, userdata.Id)
+	//handover tokens to db
+	token, refreshtoken, err := token.Generate_tokens(userdata.Email, userdata.Name, userdata.Password)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
@@ -44,7 +45,7 @@ func Login(c echo.Context) error {
 	userdata.Token = token
 	userdata.Refreshtoken = refreshtoken
 	//update user
-	response := models.Updateusertoken(userdata)
+	response := repositories.Set_token(userdata)
 	if !response {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}

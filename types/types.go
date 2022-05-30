@@ -5,9 +5,9 @@ import (
 )
 
 type SignedDetails struct {
-	Email    string
-	Username string
-	User_id  int
+	Email         string
+	User_name     string
+	User_Password string
 	jwt.StandardClaims
 }
 

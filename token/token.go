@@ -7,12 +7,12 @@ import (
 	"time"
 )
 
-func Generatetokens(email string, username string, uid int) (signedtoken string, signedrefreshtoken string, err error) {
+func Generate_tokens(email string, username string, password string) (signed_token string, signed_refreshtoken string, err error) {
 
 	claims := &types.SignedDetails{
-		Email:    email,
-		Username: username,
-		User_id:  uid,
+		Email:         email,
+		User_name:     username,
+		User_Password: password,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Local().Add(time.Hour * time.Duration(24)).Unix(),
 		},
@@ -25,7 +25,7 @@ func Generatetokens(email string, username string, uid int) (signedtoken string,
 	}
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(config.Getconfig().SecretKey))
-	refreshtoken, err := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshclaims).SignedString([]byte(config.Getconfig().SecretKey))
+	refresh_token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshclaims).SignedString([]byte(config.Getconfig().SecretKey))
 
-	return token, refreshtoken, nil
+	return token, refresh_token, nil
 }

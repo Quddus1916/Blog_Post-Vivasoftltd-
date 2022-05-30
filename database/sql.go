@@ -1,6 +1,7 @@
 package database
 
 import (
+	//"blogpost.com/types"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
@@ -22,6 +23,7 @@ func Connect() {
 }
 
 func GetDB() *gorm.DB {
+	Connect()
 
 	return db
 }
