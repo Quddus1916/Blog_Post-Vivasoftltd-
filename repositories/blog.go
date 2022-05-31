@@ -33,3 +33,9 @@ func Delete_blog(blog *models.Blog) string {
 	DB.Where("post_id = ?", blog.Post_id).Delete(&blog)
 	return "delete successful"
 }
+
+func Post_comment(comment *models.Comment) *models.Comment {
+	DB.NewRecord(comment)
+	DB.Create(&comment)
+	return comment
+}

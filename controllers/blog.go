@@ -70,3 +70,13 @@ func Delete_blog(c echo.Context) error {
 	res := repositories.Delete_blog(newblog)
 	return c.JSON(http.StatusOK, res)
 }
+
+func Post_comment(c echo.Context) error {
+	var new_comment = new(models.Comment)
+	if err := c.Bind(new_comment); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	new_comment.Created_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+	res := repositories.Post_comment(new_comment)
+	return c.JSON(http.StatusOK, res)
+}
