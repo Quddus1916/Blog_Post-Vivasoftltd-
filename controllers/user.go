@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -21,7 +22,7 @@ func Register(c echo.Context) error {
 
 	res := repositories.Create_user(user)
 
-	return c.JSON(http.StatusOK, res)
+	return c.JSON(http.StatusCreated, res)
 }
 
 func Login(c echo.Context) error {
@@ -58,6 +59,8 @@ func Update_user(c echo.Context) error {
 	if err := c.Bind(new_user); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
+	id := c.Param("id")
+	new_user.Id, _ = strconv.Atoi(id)
 	new_user.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 	res := repositories.Update_user(new_user)
 	return c.JSON(http.StatusOK, res)
@@ -65,11 +68,16 @@ func Update_user(c echo.Context) error {
 
 func Log_out(c echo.Context) error {
 	var user = new(models.User)
-	if err := c.Bind(user); err != nil {
-		return c.JSON(http.StatusBadRequest, err.Error())
+	param_id := c.Param("id")
+	if param_id == "" {
+		return c.JSON(http.StatusBadRequest, user.Id)
 	}
+	user.Id, _ = strconv.Atoi(param_id)
 	user.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 
-	res := repositories.Log_out(user)
-	return c.JSON(http.StatusOK, res)
+	err := repositories.Log_out(user)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	return c.JSON(http.StatusOK, "logout successful")
 }

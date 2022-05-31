@@ -12,12 +12,6 @@ func Create_Blog(blog *models.Blog) *models.Blog {
 	return blog
 }
 
-func Get_By_Category(category string) []models.Blog {
-	var blogs []models.Blog
-	DB.Where("category=?", category).Find(&blogs)
-	return blogs
-}
-
 func Get_all() []models.Blog {
 	var blogs []models.Blog
 	DB.Find(&blogs)
@@ -25,7 +19,7 @@ func Get_all() []models.Blog {
 }
 
 func Update_blog(blog *models.Blog) *models.Blog {
-	DB.Model(&blog).Where("post_id = ?", blog.Post_id).Updates(map[string]interface{}{"post": blog.Post, "updated_at": blog.Updated_at, "category": blog.Category})
+	DB.Model(&blog).Where("post_id = ?", blog.Post_id).Updates(map[string]interface{}{"post": blog.Post, "updated_at": blog.Updated_at})
 	return blog
 }
 

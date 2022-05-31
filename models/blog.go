@@ -7,10 +7,10 @@ import (
 )
 
 type Blog struct {
-	User_id    int       `json:"user_id"`
-	Post_id    int       `json:"post_id"`
-	Post       string    `json:"post"`
-	Category   string    `json:"category"`
+	User_id int    `json:"user_id"`
+	Post_id int    `json:"post_id"`
+	Post    string `json:"post"`
+	//Category   string    `json:"category"`
 	Created_at time.Time `json:"created_at"`
 	Updated_at time.Time `json:"updated_at"`
 }

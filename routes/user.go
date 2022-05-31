@@ -11,7 +11,7 @@ func Userroutes(e *echo.Echo) {
 
 	user.POST("/register", controllers.Register)
 	user.POST("/login", controllers.Login)
-	user.POST("/update", controllers.Update_user, middlewares.Authenticate)
-	user.GET("/logout", controllers.Log_out, middlewares.Authenticate)
+	user.PATCH("/update/:id", controllers.Update_user, middlewares.Authenticate)
+	user.GET("/logout/:id", controllers.Log_out, middlewares.Authenticate)
 
 }

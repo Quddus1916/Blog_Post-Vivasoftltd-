@@ -2,10 +2,8 @@ package repositories
 
 import (
 	"blogpost.com/models"
-	//"blogpost.com/types"
 	"blogpost.com/utils"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	//"time"
 )
 
 func Create_user(user *models.User) *models.User {
