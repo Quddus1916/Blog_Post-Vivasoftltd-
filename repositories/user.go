@@ -2,8 +2,10 @@ package repositories
 
 import (
 	"blogpost.com/models"
+	//"blogpost.com/types"
 	"blogpost.com/utils"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	//"time"
 )
 
 func Create_user(user *models.User) *models.User {
@@ -34,4 +36,9 @@ func Update_user(user *models.User) *models.User {
 	user.Password = utils.Encrypt(user.Password)
 	DB.Model(&user).Where("id = ?", user.Id).Updates(map[string]interface{}{"name": user.Name, "updated_at": user.Updated_at, "password": user.Password})
 	return user
+}
+
+func Log_out(user *models.User) error {
+	err := DB.Model(&user).Where("id = ?", user.Id).Updates(map[string]interface{}{"token": " ", "refresh_token": " ", "updated_at": user.Updated_at}).Error
+	return err
 }

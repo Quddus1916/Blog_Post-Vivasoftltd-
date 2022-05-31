@@ -62,3 +62,14 @@ func Update_user(c echo.Context) error {
 	res := repositories.Update_user(new_user)
 	return c.JSON(http.StatusOK, res)
 }
+
+func Log_out(c echo.Context) error {
+	var user = new(models.User)
+	if err := c.Bind(user); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	user.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
+
+	res := repositories.Log_out(user)
+	return c.JSON(http.StatusOK, res)
+}

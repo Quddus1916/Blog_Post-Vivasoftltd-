@@ -19,3 +19,7 @@ type UserLogIn struct {
 type Category struct {
 	Category string
 }
+
+type UserId struct {
+	Id int
+}
