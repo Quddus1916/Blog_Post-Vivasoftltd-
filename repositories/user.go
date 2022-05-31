@@ -22,7 +22,7 @@ func Get_by_email(email string) *models.User {
 
 func Set_token(user *models.User) bool {
 
-	db := DB.Model(&user).Updates(map[string]interface{}{"token": user.Token, "refreshtoken": user.Refreshtoken})
+	db := DB.Model(&user).Updates(map[string]interface{}{"token": user.Token, "refresh_token": user.Refresh_token})
 	if db == nil {
 		return false
 	}

@@ -6,8 +6,8 @@ import (
 )
 
 type Blog struct {
-	Userid     int       `json:"userid"`
-	Postid     int       `json:"postid"`
+	User_id    int       `json:"user_id"`
+	Post_id    int       `json:"post_id"`
 	Post       string    `json:"post"`
 	Category   string    `json:"category"`
 	Created_at time.Time `json:"created_at"`

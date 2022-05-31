@@ -44,7 +44,7 @@ func Login(c echo.Context) error {
 	}
 
 	userdata.Token = token
-	userdata.Refreshtoken = refreshtoken
+	userdata.Refresh_token = refreshtoken
 	//update user
 	response := repositories.Set_token(userdata)
 	if !response {
