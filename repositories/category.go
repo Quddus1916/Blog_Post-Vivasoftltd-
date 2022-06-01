@@ -12,7 +12,7 @@ func Create_category(category *models.Category) *models.Category {
 	return category
 }
 
-func Get_By_Category(category string) []models.Category {
+func Get_by_category(category string) []models.Category {
 	var categories []models.Category
 	DB.Where("category_name=?", category).Find(&categories)
 	return categories

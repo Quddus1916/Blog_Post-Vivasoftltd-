@@ -37,7 +37,7 @@ func Create_category(c echo.Context) error {
 
 func Get_blog_by_category(c echo.Context) error {
 	category_name := c.Param("category_name")
-	categories := repositories.Get_By_Category(category_name)
+	categories := repositories.Get_by_category(category_name)
 	if len(categories) == 0 {
 		return c.JSON(http.StatusFound, "failed to fetch data or no data available in this category")
 	}

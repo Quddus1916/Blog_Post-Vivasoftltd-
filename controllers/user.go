@@ -6,9 +6,17 @@ import (
 	"blogpost.com/token"
 	"blogpost.com/types"
 	"blogpost.com/utils"
+	//"bytes"
+	//	"image"
+	//"bufio"
+	//"encoding/base64"
 	"fmt"
 	"github.com/labstack/echo/v4"
+	"io"
+	//"io/ioutil"
 	"net/http"
+	"os"
+	"path"
 	"strconv"
 	"time"
 )
@@ -80,4 +88,47 @@ func Log_out(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, "logout successful")
+}
+
+func Upload_profile_picture(c echo.Context) error {
+	var user = new(models.User)
+	id := c.Param("id")
+	user.Id, _ = strconv.Atoi(id)
+
+	form, err := c.MultipartForm()
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	files := form.File["image"]
+
+	for _, file := range files {
+
+		src, err := file.Open()
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, err.Error())
+		}
+		defer src.Close()
+
+		uploaded_filename := file.Filename
+		uploaded_filepath := path.Join("./images", uploaded_filename)
+
+		dst, err := os.Create(uploaded_filepath)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, err.Error())
+		}
+		defer dst.Close()
+		if _, err = io.Copy(dst, src); err != nil {
+			return err
+		}
+		user.Image_path = uploaded_filepath
+
+		res := repositories.Upload_pro_pic(user)
+		if res != nil {
+			return c.JSON(http.StatusInternalServerError, err.Error())
+		}
+
+	}
+
+	return c.JSON(http.StatusOK, "upload successful")
 }

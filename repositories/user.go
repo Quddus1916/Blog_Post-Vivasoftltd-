@@ -40,3 +40,15 @@ func Log_out(user *models.User) error {
 	err := DB.Model(&user).Where("id = ?", user.Id).Updates(map[string]interface{}{"token": " ", "refresh_token": " ", "updated_at": user.Updated_at}).Error
 	return err
 }
+
+func Upload_pro_pic(user *models.User) error {
+	err := DB.Model(&user).Where("id = ?", user.Id).Update("image_path", user.Image_path).Error
+	return err
+}
+
+func Get_userdetails(id int) *models.User {
+	var sigleuser = new(models.User)
+	DB.Where("id=?", id).Find(sigleuser)
+	return sigleuser
+
+}
