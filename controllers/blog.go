@@ -79,3 +79,26 @@ func Post_comment(c echo.Context) error {
 	res := repositories.Post_comment(new_comment)
 	return c.JSON(http.StatusCreated, res)
 }
+
+func Update_comment(c echo.Context) error {
+	var new_comment = new(models.Comment)
+	err := c.Bind(new_comment)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+	id := c.Param("user_id")
+	comment_id, _ := strconv.Atoi(c.Param("comment_id"))
+	new_comment.Comment_id = comment_id
+	saved_comment := repositories.Get_comment_details(comment_id)
+	user_id, _ := strconv.Atoi(id)
+	user := repositories.Get_userdetails(user_id)
+	if user.Role == "user" {
+		if user.Id != saved_comment.User_id {
+			return c.JSON(http.StatusUnauthorized, user)
+		}
+	}
+
+	res := repositories.Update_comment(new_comment)
+
+	return c.JSON(http.StatusOK, res)
+}

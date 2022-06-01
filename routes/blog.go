@@ -17,5 +17,6 @@ func Blogroutes(e *echo.Echo) {
 	blog.DELETE("/delete/:id", controllers.Delete_blog)
 	blog.POST("/comment", controllers.Post_comment)
 	blog.POST("/create-category", controllers.Create_category)
+	blog.PATCH("/comment/update-comment/:user_id/:comment_id", controllers.Update_comment)
 
 }
