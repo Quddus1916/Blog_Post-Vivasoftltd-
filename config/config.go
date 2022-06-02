@@ -1,25 +1,36 @@
 package config
 
 import (
-	"github.com/joho/godotenv"
-	"os"
+	//"github.com/joho/godotenv"
+	"github.com/spf13/viper"
+	//"os"
+	"fmt"
 )
 
 type Config struct {
-	Port      string
-	SecretKey string
+	Port      string `mapstructure:"PORT"`
+	SecretKey string `mapstructure:"SECRETKEY"`
 }
 
-func Initconfig() Config {
-	godotenv.Load()
-	var config Config
-	config.Port = os.Getenv("PORT")
-	config.SecretKey = os.Getenv("SECRETKEY")
+func Initconfig() (config Config, err error) {
+	viper.AddConfigPath(".")
+	viper.SetConfigName("App")
+	viper.SetConfigType("env")
+	viper.AutomaticEnv()
+	err = viper.ReadInConfig()
 
-	return config
+	if err != nil {
+		fmt.Println(err.Error())
+		return
 
+	}
+
+	err = viper.Unmarshal(&config)
+	return
 }
 
 func Getconfig() Config {
-	return Initconfig()
+	config, _ := Initconfig()
+	return config
+
 }

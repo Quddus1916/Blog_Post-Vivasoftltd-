@@ -3,6 +3,7 @@ package main
 import (
 	"blogpost.com/config"
 	"blogpost.com/routes"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -18,7 +19,10 @@ func main() {
 
 	routes.Blogroutes(e)
 
-	config := config.Getconfig()
+	config, err := config.Initconfig()
+	if err != nil {
+		fmt.Println("failed to load config files")
+	}
 
 	e.Start(":" + config.Port)
 
