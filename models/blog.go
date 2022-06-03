@@ -6,9 +6,9 @@ import (
 	"time"
 )
 
-type Blog struct {
+type Post struct {
 	User_id int    `json:"user_id"`
-	Post_id int    `json:"post_id"`
+	Id      int    `json:"id"`
 	Post    string `json:"post"`
 	//Category   string    `json:"category"`
 	Created_at time.Time `json:"created_at"`

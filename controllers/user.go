@@ -28,12 +28,12 @@ func Register(c echo.Context) error {
 	}
 	user.Password = utils.Encrypt(user.Password)
 
-	res := repositories.Create_user(user)
+	res := repositories.CreateUser(user)
 
 	return c.JSON(http.StatusCreated, res)
 }
 
-func Login(c echo.Context) error {
+func LogIn(c echo.Context) error {
 	//given details
 	var user = new(types.UserLogIn)
 	if err := c.Bind(user); err != nil {
@@ -41,7 +41,7 @@ func Login(c echo.Context) error {
 	}
 	//fetch details
 	var userdata = new(models.User)
-	userdata = repositories.Get_by_email(user.Email)
+	userdata = repositories.GetByEmail(user.Email)
 
 	if ok := utils.Verify_password(user.Password, userdata.Password); ok {
 		fmt.Println("verified user")
@@ -55,14 +55,14 @@ func Login(c echo.Context) error {
 	userdata.Token = token
 	userdata.Refresh_token = refreshtoken
 	//update user
-	response := repositories.Set_token(userdata)
+	response := repositories.SetToken(userdata)
 	if !response {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 	return c.JSON(http.StatusOK, userdata.Token)
 }
 
-func Update_user(c echo.Context) error {
+func UpdateUser(c echo.Context) error {
 	var new_user = new(models.User)
 	if err := c.Bind(new_user); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
@@ -70,11 +70,11 @@ func Update_user(c echo.Context) error {
 	id := c.Param("id")
 	new_user.Id, _ = strconv.Atoi(id)
 	new_user.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-	res := repositories.Update_user(new_user)
+	res := repositories.UpdateUser(new_user)
 	return c.JSON(http.StatusOK, res)
 }
 
-func Log_out(c echo.Context) error {
+func LogOut(c echo.Context) error {
 	var user = new(models.User)
 	param_id := c.Param("id")
 	if param_id == "" {
@@ -83,14 +83,14 @@ func Log_out(c echo.Context) error {
 	user.Id, _ = strconv.Atoi(param_id)
 	user.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 
-	err := repositories.Log_out(user)
+	err := repositories.LogOut(user)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 	return c.JSON(http.StatusOK, "logout successful")
 }
 
-func Upload_profile_picture(c echo.Context) error {
+func UploadProfilePicture(c echo.Context) error {
 	var user = new(models.User)
 	id := c.Param("id")
 	user.Id, _ = strconv.Atoi(id)
@@ -123,7 +123,7 @@ func Upload_profile_picture(c echo.Context) error {
 		}
 		user.Image_path = uploaded_filepath
 
-		res := repositories.Upload_pro_pic(user)
+		res := repositories.UploadPic(user)
 		if res != nil {
 			return c.JSON(http.StatusInternalServerError, err.Error())
 		}

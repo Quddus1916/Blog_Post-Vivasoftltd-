@@ -12,7 +12,7 @@ var DB *gorm.DB
 func init() {
 	DB = database.GetDB()
 	DB.AutoMigrate(&models.User{})
-	DB.AutoMigrate(&models.Blog{})
+	DB.AutoMigrate(&models.Post{})
 	DB.AutoMigrate(&models.Comment{})
 	DB.AutoMigrate(&models.Category{})
 }

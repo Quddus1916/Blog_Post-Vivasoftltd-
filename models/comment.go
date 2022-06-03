@@ -9,7 +9,7 @@ import (
 type Comment struct {
 	Post_id    int       `json:"post_id"`
 	User_id    int       `json:"user_id"`
-	Comment_id int       `json:"comment_id" gorm:"primary_key;auto_increment;not_null"`
+	Id         int       `json:"id" gorm:"primary_key;auto_increment;not_null"`
 	Comment    string    `json:"comment"`
 	Created_at time.Time `json:"created_at"`
 }

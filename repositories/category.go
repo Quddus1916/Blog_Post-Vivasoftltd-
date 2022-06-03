@@ -5,14 +5,14 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-func Create_category(category *models.Category) *models.Category {
+func CreateCategory(category *models.Category) *models.Category {
 	DB.NewRecord(category)
 	DB.Create(&category)
 
 	return category
 }
 
-func Get_by_category(category string) []models.Category {
+func GetByCategory(category string) []models.Category {
 	var categories []models.Category
 	DB.Where("category_name=?", category).Find(&categories)
 	return categories

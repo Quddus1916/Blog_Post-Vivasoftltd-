@@ -5,25 +5,25 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-func Create_Blog(blog *models.Blog) *models.Blog {
+func CreatePost(blog *models.Post) *models.Post {
 	DB.NewRecord(blog)
 	DB.Create(&blog)
 
 	return blog
 }
 
-func Get_all() []models.Blog {
-	var blogs []models.Blog
+func GetAll() []models.Post {
+	var blogs []models.Post
 	DB.Find(&blogs)
 	return blogs
 }
 
-func Update_blog(blog *models.Blog) *models.Blog {
-	DB.Model(&blog).Where("post_id = ?", blog.Post_id).Updates(map[string]interface{}{"post": blog.Post, "updated_at": blog.Updated_at})
-	return blog
+func UpdatePost(post *models.Post) *models.Post {
+	DB.Model(&post).Where("id = ?", post.Id).Updates(map[string]interface{}{"post": post.Post, "updated_at": post.Updated_at})
+	return post
 }
 
-func Delete_blog(blog *models.Blog) string {
-	DB.Where("post_id = ?", blog.Post_id).Delete(&blog)
+func DeletePost(post *models.Post) string {
+	DB.Where("id = ?", post.Id).Delete(&post)
 	return "delete successful"
 }
