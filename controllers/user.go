@@ -18,6 +18,7 @@ import (
 	"os"
 	"path"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -76,11 +77,17 @@ func UpdateUser(c echo.Context) error {
 
 func LogOut(c echo.Context) error {
 	var user = new(models.User)
-	param_id := c.Param("id")
-	if param_id == "" {
-		return c.JSON(http.StatusBadRequest, user.Id)
-	}
-	user.Id, _ = strconv.Atoi(param_id)
+	// param_id := c.Param("id")
+	// if param_id == "" {
+	// 	return c.JSON(http.StatusBadRequest, user.Id)
+	// }
+
+	auth_token := c.Request().Header.Get("Authorization")
+	splitToken := strings.Split(auth_token, "Bearer ")
+	email := utils.ParserToken(splitToken[1])
+	user.Email = email
+	//utils.ParserToken(auth_token)
+	//user.Id, _ = strconv.Atoi(param_id)
 	user.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 
 	err := repositories.LogOut(user)

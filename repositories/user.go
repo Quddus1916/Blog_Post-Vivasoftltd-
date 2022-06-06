@@ -37,7 +37,7 @@ func UpdateUser(user *models.User) *models.User {
 }
 
 func LogOut(user *models.User) error {
-	err := DB.Model(&user).Where("id = ?", user.Id).Updates(map[string]interface{}{"token": " ", "refresh_token": " ", "updated_at": user.Updated_at}).Error
+	err := DB.Model(&user).Where("email = ?", user.Email).Updates(map[string]interface{}{"token": " ", "refresh_token": " ", "updated_at": user.Updated_at}).Error
 	return err
 }
 

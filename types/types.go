@@ -5,7 +5,7 @@ import (
 )
 
 type SignedDetails struct {
-	Email         string
+	Email         string `json:"email"`
 	User_name     string
 	User_Password string
 	jwt.StandardClaims
